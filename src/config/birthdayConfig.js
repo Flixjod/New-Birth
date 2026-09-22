@@ -10,11 +10,11 @@
 
 export const birthdayConfig = {
   // ── The star of the show ─────────────────────────────────────────
-  name: 'Aarohi',
+  name: 'Aadya',
 
   // ── Birthday: YYYY-MM-DD. The countdown targets 00:00 on this date
   //    in the timezone below — accurate no matter where the visitor is.
-  birthday: '2026-09-01',
+  birthday: '2027-06-13',
   timezone: 'Asia/Kolkata',
 
   // ── Opening lines (shown one after another on the dark screen) ───
