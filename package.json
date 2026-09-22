@@ -1,0 +1,1 @@
+{"dependencies":{"react":"^18.3.1","react-dom":"^18.3.1"},"description":"New-Birth — a premium cinematic birthday surprise website","devDependencies":{"@vitejs/plugin-react":"^4.3.4","vite":"^6.0.7"},"name":"new-birth","private":true,"scripts":{"build":"vite build","dev":"vite","preview":"vite preview"},"type":"module","version":"1.0.0"}

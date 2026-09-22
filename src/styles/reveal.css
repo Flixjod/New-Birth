@@ -1,0 +1,195 @@
+/* ═══════════════════════════════════════════════════════════════
+   reveal.css — the midnight moment, staged like cinema
+   ═══════════════════════════════════════════════════════════════ */
+
+.reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #030208;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 1.4s ease;
+}
+
+.reveal-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(80vmin, 420px);
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+/* The point of purple light */
+.reveal-light {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #fdfaff 0%,
+    #e9d5ff 12%,
+    #c4b5fd 26%,
+    #a78bfa 42%,
+    rgba(139, 92, 246, 0.55) 60%,
+    rgba(124, 58, 237, 0.18) 75%,
+    transparent 88%
+  );
+  transform: scale(0);
+  opacity: 0;
+  transition:
+    transform 1.5s var(--ease-cinema),
+    opacity 1.2s ease;
+  filter: blur(2px);
+}
+
+.reveal-rays {
+  position: absolute;
+  inset: -38%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg, rgba(196, 181, 253, 0.14) 8deg, transparent 16deg,
+    transparent 40deg, rgba(240, 171, 252, 0.1) 48deg, transparent 56deg,
+    transparent 90deg, rgba(167, 139, 250, 0.14) 98deg, transparent 106deg,
+    transparent 150deg, rgba(196, 181, 253, 0.1) 158deg, transparent 166deg,
+    transparent 210deg, rgba(240, 171, 252, 0.12) 218deg, transparent 226deg,
+    transparent 270deg, rgba(167, 139, 250, 0.14) 278deg, transparent 286deg,
+    transparent 330deg, rgba(196, 181, 253, 0.1) 338deg, transparent 346deg
+  );
+  opacity: 0;
+  animation: raysSpin 26s linear infinite;
+  transition: opacity 2s ease;
+  -webkit-mask-image: radial-gradient(circle, transparent 32%, black 55%);
+  mask-image: radial-gradient(circle, transparent 32%, black 55%);
+}
+
+@keyframes raysSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Stage choreography ────────────────────────────────────────── */
+.stage-dark .reveal-light { transform: scale(0); opacity: 0; }
+
+.stage-spark .reveal-light { transform: scale(0.07); opacity: 1; }
+
+.stage-gather .reveal-light {
+  transform: scale(0.16);
+  opacity: 1;
+  animation: gatherPulse 1.1s ease-in-out infinite;
+}
+
+@keyframes gatherPulse {
+  0%, 100% { filter: blur(2px) brightness(1); }
+  50% { filter: blur(1px) brightness(1.5); }
+}
+
+.stage-bloom { background: #0d0618; }
+.stage-bloom .reveal-light { transform: scale(6.5); opacity: 1; filter: blur(6px); }
+.stage-bloom .reveal-rays { opacity: 1; }
+
+.stage-title .reveal-light,
+.stage-name .reveal-light,
+.stage-settle .reveal-light {
+  transform: scale(7.5);
+  opacity: 0.9;
+  filter: blur(10px);
+}
+
+.stage-title .reveal-rays,
+.stage-name .reveal-rays,
+.stage-settle .reveal-rays { opacity: 0.85; }
+
+.stage-settle { background: #07040f; }
+.stage-settle .reveal-light { opacity: 0.55; }
+
+/* ── The words ─────────────────────────────────────────────────── */
+.reveal-text {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.reveal-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 11vw, 5.2rem);
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  line-height: 1.25;
+  color: var(--white);
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(10px);
+  transition:
+    opacity 1.4s var(--ease-cinema),
+    transform 1.4s var(--ease-cinema),
+    filter 1.4s var(--ease-cinema);
+  text-shadow: 0 0 34px rgba(167, 139, 250, 0.5);
+}
+
+.reveal-title span { display: inline-block; }
+
+.stage-title .reveal-title,
+.stage-name .reveal-title,
+.stage-settle .reveal-title {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+.reveal-name {
+  font-family: var(--font-script);
+  font-size: clamp(3.6rem, 17vw, 7.5rem);
+  line-height: 1.15;
+  margin-top: 0.4rem;
+  background: linear-gradient(100deg, #ede9fe, var(--pink) 45%, var(--lavender) 80%, #ede9fe);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transform: scale(0.92);
+  filter: blur(12px);
+  transition:
+    opacity 1.6s var(--ease-cinema),
+    transform 1.6s var(--ease-cinema),
+    filter 1.6s var(--ease-cinema);
+  animation: nameShimmer 5s linear infinite;
+}
+
+@keyframes nameShimmer {
+  to { background-position: 220% center; }
+}
+
+.stage-name .reveal-name,
+.stage-settle .reveal-name {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0) drop-shadow(0 0 26px rgba(196, 132, 252, 0.75)) drop-shadow(0 0 90px rgba(124, 58, 237, 0.5));
+}
+
+.reveal-sub {
+  margin-top: 1.4rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1rem, 3.6vw, 1.25rem);
+  color: var(--muted);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 1.4s ease 0.5s, transform 1.4s ease 0.5s;
+}
+
+.stage-settle .reveal-sub {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-confetti {
+  z-index: 60;
+}

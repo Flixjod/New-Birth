@@ -1,0 +1,202 @@
+/* ═══════════════════════════════════════════════════════════════
+   countdown.css — live countdown to midnight
+   ═══════════════════════════════════════════════════════════════ */
+
+.countdown {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  padding: 2rem 1.25rem calc(2rem + var(--sab));
+  background:
+    radial-gradient(100% 70% at 50% 115%, rgba(124, 58, 237, 0.22), transparent 62%),
+    #050309;
+}
+
+.countdown-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(110% 90% at 50% 50%, transparent 50%, rgba(5, 2, 12, 0.9) 100%);
+  transition: opacity 2s;
+}
+
+.cd-inner {
+  position: relative;
+  z-index: 2;
+  animation: cdRise 1.6s var(--ease-cinema);
+}
+
+@keyframes cdRise {
+  from { opacity: 0; transform: translateY(26px); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+
+.cd-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--lavender);
+  margin-bottom: 1.2rem;
+}
+
+.cd-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 8vw, 3.4rem);
+  margin-bottom: 2.4rem;
+}
+
+.cd-title-accent {
+  font-style: italic;
+  background: linear-gradient(100deg, var(--lilac), var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cd-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(0.35rem, 2vw, 0.9rem);
+}
+
+.cd-unit {
+  min-width: clamp(3.4rem, 17vw, 6.2rem);
+}
+
+.cd-digits {
+  display: flex;
+  justify-content: center;
+  gap: 0.08em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.6rem, 13vw, 4.8rem);
+  line-height: 1;
+  color: var(--white);
+  text-shadow:
+    0 0 22px rgba(139, 92, 246, 0.55),
+    0 0 70px rgba(124, 58, 237, 0.3);
+  font-variant-numeric: tabular-nums;
+}
+
+.digit {
+  display: inline-block;
+  overflow: hidden;
+  height: 1em;
+}
+
+.digit-strip {
+  display: inline-block;
+  animation: digitRoll 0.55s var(--ease-cinema);
+}
+
+@keyframes digitRoll {
+  from { transform: translateY(-88%); opacity: 0; filter: blur(4px); }
+  to { transform: translateY(0); opacity: 1; filter: blur(0); }
+}
+
+.cd-label {
+  margin-top: 0.7rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  text-indent: 0.38em;
+  color: var(--faint);
+}
+
+.cd-sep {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 7vw, 2.6rem);
+  color: rgba(167, 139, 250, 0.5);
+  line-height: 1;
+  padding-top: 0.1em;
+}
+
+.cd-hint {
+  margin-top: 2.6rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.cd-skip {
+  margin-top: 1.4rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+  border-bottom: 1px solid rgba(167, 139, 250, 0.35);
+  padding-bottom: 0.3rem;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.cd-skip:hover {
+  color: var(--lilac);
+  border-color: var(--lilac);
+}
+
+/* The final ten seconds take over the screen */
+.cd-final {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.cd-final-number {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(7rem, 42vw, 15rem);
+  line-height: 1;
+  color: var(--white);
+  text-shadow:
+    0 0 40px rgba(167, 139, 250, 0.9),
+    0 0 140px rgba(124, 58, 237, 0.6);
+  animation: finalBeat 1s var(--ease-cinema);
+}
+
+@keyframes finalBeat {
+  0% { opacity: 0; transform: scale(1.35); filter: blur(14px); }
+  35% { opacity: 1; transform: scale(1); filter: blur(0); }
+  80% { opacity: 1; transform: scale(0.985); }
+  100% { opacity: 0.92; transform: scale(0.97); }
+}
+
+.cd-final-sub {
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+/* Birthday already arrived */
+.cd-arrived {
+  position: relative;
+  z-index: 2;
+  animation: cdRise 1.4s var(--ease-cinema);
+}
+
+.cd-arrived-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--lavender);
+  margin-bottom: 1rem;
+}
+
+.cd-arrived-title {
+  font-family: var(--font-script);
+  font-size: clamp(3.4rem, 14vw, 6rem);
+  background: linear-gradient(100deg, var(--lilac), var(--pink) 55%, var(--lavender));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 22px rgba(167, 139, 250, 0.6));
+}

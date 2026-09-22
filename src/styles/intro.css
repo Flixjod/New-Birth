@@ -1,0 +1,63 @@
+/* ═══════════════════════════════════════════════════════════════
+   intro.css — the dark cinematic opening
+   ═══════════════════════════════════════════════════════════════ */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(90% 70% at 50% 110%, rgba(124, 58, 237, 0.16), transparent 60%),
+    radial-gradient(70% 55% at 50% -10%, rgba(42, 22, 80, 0.7), transparent 70%),
+    #050309;
+  overflow: hidden;
+}
+
+.intro-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 100% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.75) 100%);
+}
+
+.intro-inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+  max-width: 34rem;
+}
+
+.intro-line {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1.5rem, 6vw, 2.3rem);
+  line-height: 1.5;
+  color: var(--white);
+  text-shadow: 0 0 30px rgba(139, 92, 246, 0.35);
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(6px);
+  transition:
+    opacity 1.6s var(--ease-cinema),
+    transform 1.6s var(--ease-cinema),
+    filter 1.6s var(--ease-cinema);
+}
+
+.intro-line + .intro-line {
+  margin-top: 0.6rem;
+}
+
+.intro-line.is-visible {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+.intro .enter-btn {
+  display: inline-block;
+}
