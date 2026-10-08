@@ -1,0 +1,328 @@
+/* Surprise — sur- — sealed envelope reveal */
+
+.sur-root {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(110% 75% at 50% 20%, #22103f 0%, var(--bg) 60%),
+    var(--bg);
+  padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.sur-atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sur-back {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  left: 1rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  opacity: 0.55;
+  padding: 0.75rem;
+  z-index: 3;
+  transition: opacity 0.4s ease;
+}
+
+.sur-back:hover {
+  opacity: 1;
+}
+
+.sur-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 40rem;
+  display: flex;
+  justify-content: center;
+}
+
+.sur-stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── OpenMe ─────────────────────────────────────────────── */
+
+.sur-openme-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 2rem;
+}
+
+.sur-spark {
+  position: absolute;
+  color: var(--pink);
+  opacity: 0.8;
+  animation: sur-twinkle 2.8s ease-in-out infinite;
+}
+
+.sur-spark-1 { top: 12%; left: 14%; font-size: 1.1rem; }
+.sur-spark-2 { top: 24%; right: 12%; font-size: 0.85rem; animation-delay: 0.9s; }
+.sur-spark-3 { bottom: 22%; left: 20%; font-size: 0.7rem; animation-delay: 1.7s; }
+
+@keyframes sur-twinkle {
+  0%, 100% { transform: scale(0.6) rotate(0deg); opacity: 0.25; }
+  50% { transform: scale(1.15) rotate(20deg); opacity: 0.95; }
+}
+
+.sur-openme {
+  position: relative;
+  width: clamp(13rem, 60vw, 17rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(240, 171, 252, 0.45);
+  background: radial-gradient(circle at 50% 38%, rgba(124, 58, 237, 0.5), rgba(44, 18, 92, 0.75) 70%);
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 60px rgba(139, 92, 246, 0.45), inset 0 0 40px rgba(240, 171, 252, 0.15);
+}
+
+.sur-openme-label {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 0 18px rgba(240, 171, 252, 0.8);
+}
+
+.sur-openme-halo {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  animation: sur-halo 3.2s ease-in-out infinite;
+}
+
+@keyframes sur-halo {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.sur-openme-sub {
+  margin-top: 2.2rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--muted);
+}
+
+/* ── Envelope ───────────────────────────────────────────── */
+
+.sur-envelope-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1200px;
+}
+
+.sur-envelope {
+  position: relative;
+  width: clamp(17rem, 78vw, 24rem);
+  aspect-ratio: 1.6;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.sur-env-body {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 0.6rem;
+  background: linear-gradient(160deg, #3b1d6e, #241040);
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 50px rgba(124, 58, 237, 0.25);
+  overflow: hidden;
+}
+
+.sur-env-pocket {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom right, transparent 49.4%, rgba(167, 139, 250, 0.22) 50%, transparent 50.6%),
+    linear-gradient(to bottom left, transparent 49.4%, rgba(167, 139, 250, 0.22) 50%, transparent 50.6%);
+}
+
+.sur-mini-note {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 8%;
+  bottom: 8%;
+  z-index: 2;
+  border-radius: 0.5rem;
+  background: linear-gradient(170deg, #f5f3ff, #d9cdf7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.sur-mini-note-mark {
+  color: var(--violet);
+  font-size: 1.6rem;
+}
+
+.sur-env-flap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 54%;
+  transform-origin: top center;
+  border-radius: 0.6rem 0.6rem 0 0;
+  background: linear-gradient(180deg, #4c2385, #33155f);
+  border: 1px solid rgba(167, 139, 250, 0.5);
+  border-bottom: none;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.sur-seal {
+  margin-bottom: 0.6rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f0abfc, #a855f7 60%, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.3rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 22px rgba(240, 171, 252, 0.5);
+}
+
+.sur-env-hint {
+  margin-top: 2.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* ── SecretNote ─────────────────────────────────────────── */
+
+.sur-stage-note {
+  max-width: 34rem;
+}
+
+.sur-note {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(165deg, rgba(124, 58, 237, 0.14), rgba(124, 58, 237, 0.03));
+  border: 1px solid rgba(240, 171, 252, 0.35);
+  border-radius: 1.4rem;
+  padding: clamp(2.2rem, 7vw, 3.4rem) clamp(1.6rem, 6vw, 3rem);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 60px rgba(139, 92, 246, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.sur-note-mark {
+  display: block;
+  color: var(--pink);
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 0 18px rgba(240, 171, 252, 0.8);
+}
+
+.sur-note-title {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 9vw, 3.4rem);
+  line-height: 1.2;
+  color: var(--pink);
+  margin: 0 0 1.6rem;
+}
+
+.sur-note-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.9rem;
+  overflow: hidden;
+  margin: 0 0 1.8rem;
+  background:
+    radial-gradient(90% 120% at 50% 10%, rgba(240, 171, 252, 0.35), transparent 60%),
+    linear-gradient(150deg, #2a1650, #120826);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sur-note-photo-fallback {
+  color: var(--lavender);
+  font-size: 2rem;
+  opacity: 0.6;
+}
+
+.sur-note-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sur-note-message {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 4.6vw, 1.45rem);
+  line-height: 1.85;
+  color: var(--white);
+  margin: 0;
+  white-space: pre-line;
+}
+
+.sur-note-empty {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.sur-cta {
+  margin-top: clamp(2.5rem, 7vw, 3.5rem);
+  display: flex;
+  justify-content: center;
+}
+
+.sur-continue {
+  min-width: 11rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sur-spark,
+  .sur-openme-halo {
+    animation: none;
+  }
+  .sur-back {
+    transition: none;
+  }
+}

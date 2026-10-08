@@ -1,0 +1,303 @@
+/* ── MemoryWorld · mw- prefix ───────────────────────────────── */
+
+.mw-root {
+  position: relative;
+  min-height: 100dvh;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* ── atmosphere layers ── */
+.mw-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.mw-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── camera / canvas (CSS 3D stage) ── */
+.mw-camera-root {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  touch-action: none;
+  cursor: grab;
+}
+
+.mw-camera-root:active {
+  cursor: grabbing;
+}
+
+.mw-camera {
+  position: absolute;
+  inset: -8%;
+  transform: perspective(1100px);
+  transform-style: preserve-3d;
+}
+
+.mw-canvas {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.mw-photo-slot {
+  position: absolute;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+/* ── photo card ── */
+.mw-photo {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: clamp(140px, 32vw, 210px);
+  aspect-ratio: 4 / 5;
+  border-radius: 14px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.mw-photo-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  background: linear-gradient(135deg, #2b1a52 0%, #150b2e 60%, #0b0618 100%);
+  border: 1px solid rgba(196, 181, 253, 0.28);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.55),
+    0 0 34px rgba(124, 58, 237, 0.35);
+}
+
+.mw-photo-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 30% 20%, rgba(245, 243, 255, 0.14), transparent 55%);
+  pointer-events: none;
+}
+
+.mw-photo-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* gentle idle float (transform only) */
+.mw-float {
+  width: 100%;
+  height: 100%;
+  animation: mw-floaty 7s ease-in-out infinite;
+}
+
+@keyframes mw-floaty {
+  0%, 100% { transform: translateY(-7px) rotate(-0.6deg); }
+  50% { transform: translateY(7px) rotate(0.6deg); }
+}
+
+/* ── focused photo ── */
+.mw-focus-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  pointer-events: none;
+}
+
+.mw-photo--focus {
+  position: relative;
+  pointer-events: auto;
+  cursor: default;
+}
+
+.mw-photo--large {
+  width: clamp(230px, 72vw, 340px);
+}
+
+.mw-photo--focus .mw-photo-frame {
+  border-color: rgba(196, 181, 253, 0.55);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.65),
+    0 0 60px rgba(139, 92, 246, 0.55),
+    0 0 140px rgba(124, 58, 237, 0.3);
+}
+
+.mw-caption {
+  position: absolute;
+  top: calc(100% + 0.9rem);
+  left: 50%;
+  width: max-content;
+  max-width: 80vw;
+  font-family: var(--font-hand);
+  font-size: 1.45rem;
+  line-height: 1.35;
+  color: var(--lilac);
+  text-align: center;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
+}
+
+.mw-close {
+  position: absolute;
+  top: -0.9rem;
+  right: -0.9rem;
+  z-index: 2;
+}
+
+/* ── depth overlay (background blur while a photo is focused) ── */
+.mw-depth {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: rgba(7, 4, 15, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.mw-depth--soft {
+  background: rgba(7, 4, 15, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ── particles ── */
+.mw-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mw-particle {
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 0 8px 1px currentColor;
+  animation: mw-particle-drift 10s ease-in-out infinite;
+}
+
+@keyframes mw-particle-drift {
+  0%, 100% { transform: translateY(0); opacity: 0.25; }
+  50% { transform: translateY(calc(var(--drift, 24px) * -1)); opacity: 0.85; }
+}
+
+/* ── light trails ── */
+.mw-trails {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mw-trail {
+  position: absolute;
+  left: -20%;
+  width: 140%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(167, 139, 250, 0.55),
+    rgba(240, 171, 252, 0.35),
+    transparent
+  );
+  filter: blur(1px);
+  animation: mw-trail-slide 30s ease-in-out infinite;
+}
+
+@keyframes mw-trail-slide {
+  0% { transform: translateX(-8%) rotate(var(--tilt, 0deg)); opacity: 0.15; }
+  50% { opacity: 0.55; }
+  100% { transform: translateX(8%) rotate(var(--tilt, 0deg)); opacity: 0.15; }
+}
+
+/* ── chrome ── */
+.mw-hint {
+  position: absolute;
+  bottom: 4.8rem;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  color: var(--muted);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.mw-continue {
+  position: absolute;
+  bottom: 1.4rem;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+}
+
+.mw-back {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 5;
+  opacity: 0.8;
+}
+
+.mw-back:hover {
+  opacity: 1;
+}
+
+/* ── empty state ── */
+.mw-empty {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.mw-empty-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 6vw, 2.4rem);
+  color: var(--white);
+  margin: 0;
+  text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+}
+
+.mw-empty-sub {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 36ch;
+  margin: 0 0 0.5rem;
+}

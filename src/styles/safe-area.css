@@ -1,0 +1,14 @@
+/* New-Birth · safe-area.css — notch-aware spacing helpers */
+
+.pad-safe-top {
+  padding-top: var(--sat);
+}
+
+.pad-safe-bottom {
+  padding-bottom: var(--sab);
+}
+
+.pad-safe-x {
+  padding-left: var(--sal);
+  padding-right: var(--sar);
+}

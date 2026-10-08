@@ -1,0 +1,151 @@
+/* ── Midnight · mid- prefix ─────────────────────────────────── */
+
+.mid-root {
+  position: relative;
+  min-height: 100dvh;
+  background: var(--bg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mid-stage {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  min-height: 62dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── PurpleExplosion ── */
+.mid-explosion {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.mid-flash {
+  position: absolute;
+  width: 14vmin;
+  height: 14vmin;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(245, 243, 255, 0.95) 0%,
+    rgba(240, 171, 252, 0.75) 30%,
+    rgba(139, 92, 246, 0.45) 55%,
+    rgba(124, 58, 237, 0) 72%
+  );
+  filter: blur(4px);
+}
+
+.mid-ring {
+  position: absolute;
+  width: 22vmin;
+  height: 22vmin;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 181, 253, 0.55);
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.35), inset 0 0 24px rgba(139, 92, 246, 0.25);
+}
+
+.mid-ring--2 {
+  border-color: rgba(240, 171, 252, 0.4);
+}
+
+.mid-particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f5f3ff 0%, #a78bfa 60%, rgba(124, 58, 237, 0) 100%);
+  box-shadow: 0 0 10px 2px rgba(139, 92, 246, 0.75);
+}
+
+/* ── NameReveal ── */
+.mid-name-stage {
+  position: relative;
+  width: 100%;
+  min-height: 50dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mid-memories {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.mid-mem-photo {
+  position: absolute;
+  width: clamp(76px, 20vw, 128px);
+  aspect-ratio: 3 / 4;
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #2b1a52 0%, #120a24 100%);
+  border: 1px solid rgba(196, 181, 253, 0.3);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5), 0 0 26px rgba(124, 58, 237, 0.35);
+}
+
+.mid-mem-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mid-name-wrap {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.mid-eyebrow {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: clamp(0.68rem, 2.6vw, 0.95rem);
+  letter-spacing: 0.55em;
+  text-indent: 0.55em;
+  color: var(--lilac);
+  margin: 0 0 1.1rem;
+  opacity: 0.9;
+}
+
+.mid-name {
+  font-family: var(--font-script);
+  font-weight: 400;
+  margin: 0;
+  font-size: clamp(3.4rem, 17vw, 7.6rem);
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  text-shadow:
+    0 0 18px rgba(196, 181, 253, 0.85),
+    0 0 60px rgba(139, 92, 246, 0.65),
+    0 0 130px rgba(124, 58, 237, 0.5);
+}
+
+.mid-letter {
+  display: inline-block;
+}
+
+/* ── skip affordance ── */
+.mid-skip {
+  position: absolute;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 5;
+  opacity: 0.7;
+}
+
+.mid-skip:hover {
+  opacity: 1;
+}

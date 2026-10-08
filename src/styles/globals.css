@@ -1,0 +1,336 @@
+/* New-Birth · globals.css — reset, shell, shared UI + effect primitives */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.45);
+  color: var(--white);
+}
+
+:focus-visible {
+  outline: 2px solid var(--lavender);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── App shell ─────────────────────────────────────────────────── */
+
+.nb-app,
+.nb-experience {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+}
+
+.nb-scene-wrap {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Helper every scene can use for a full-viewport cinematic stage. */
+.nb-scene {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(24px + var(--sat)) 20px calc(32px + var(--sab));
+  text-align: center;
+}
+
+/* Image with a graceful gradient fallback while/after loading. */
+.nb-img {
+  background: linear-gradient(135deg, var(--violet-deep), var(--bg-3));
+}
+
+/* ── Buttons ───────────────────────────────────────────────────── */
+
+.nb-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 38px;
+  border-radius: 999px;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: transform 0.5s var(--ease-cinema), box-shadow 0.5s var(--ease-cinema),
+    background 0.5s var(--ease-cinema);
+}
+
+.nb-btn-primary {
+  color: var(--white);
+  background: linear-gradient(135deg, var(--violet), var(--royal));
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.nb-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 44px rgba(139, 92, 246, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.nb-btn-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.nb-btn-ghost {
+  color: var(--muted);
+  border: 1px solid var(--glass-border);
+  background: rgba(139, 92, 246, 0.06);
+}
+
+.nb-btn-ghost:hover {
+  color: var(--white);
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+.nb-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--glass-border);
+  background: rgba(13, 7, 24, 0.6);
+  backdrop-filter: blur(8px);
+  font-size: 20px;
+  color: var(--muted);
+  transition: color 0.3s, border-color 0.3s, transform 0.3s var(--ease-cinema);
+}
+
+.nb-icon-btn:hover {
+  color: var(--white);
+  border-color: rgba(167, 139, 250, 0.5);
+  transform: scale(1.06);
+}
+
+/* ── Story chrome ──────────────────────────────────────────────── */
+
+.nb-progress {
+  position: fixed;
+  bottom: calc(14px + var(--sab));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 7px;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.nb-progress span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(167, 139, 250, 0.22);
+  transition: background 0.6s, transform 0.6s var(--ease-cinema);
+}
+
+.nb-progress span.is-done {
+  background: rgba(167, 139, 250, 0.55);
+}
+
+.nb-progress span.is-active {
+  background: var(--lavender);
+  transform: scale(1.5);
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.9);
+}
+
+.nb-back {
+  position: fixed;
+  top: calc(14px + var(--sat));
+  left: calc(14px + var(--sal));
+  z-index: 60;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--faint);
+  border: 1px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.nb-back:hover {
+  color: var(--white);
+  border-color: var(--glass-border);
+}
+
+/* ── Music toggle ──────────────────────────────────────────────── */
+
+.nb-music-toggle {
+  position: fixed;
+  top: calc(14px + var(--sat));
+  right: calc(14px + var(--sar));
+  z-index: 60;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--glass-border);
+  background: rgba(13, 7, 24, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.nb-music-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 14px;
+}
+
+.nb-music-bars i {
+  width: 3px;
+  height: 5px;
+  border-radius: 2px;
+  background: var(--faint);
+  transition: background 0.3s;
+}
+
+.nb-music-toggle.is-playing .nb-music-bars i {
+  background: var(--lavender);
+  animation: nb-eq 1.1s ease-in-out infinite;
+}
+
+.nb-music-toggle.is-playing .nb-music-bars i:nth-child(2) {
+  animation-delay: 0.25s;
+}
+
+.nb-music-toggle.is-playing .nb-music-bars i:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+@keyframes nb-eq {
+  0%,
+  100% {
+    height: 5px;
+  }
+  50% {
+    height: 14px;
+  }
+}
+
+/* ── Effect primitives ─────────────────────────────────────────── */
+
+.nb-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.nb-glow {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(10px);
+}
+
+.nb-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-size: 160px 160px;
+  mix-blend-mode: overlay;
+}
+
+.nb-bokeh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nb-bokeh-dot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(18px);
+  animation: nb-bokeh-drift 14s ease-in-out infinite alternate;
+}
+
+@keyframes nb-bokeh-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(4vw, -6vh, 0);
+  }
+}
+
+.nb-lightleak {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    rgba(240, 171, 252, 0.07) 50%,
+    transparent 58%
+  );
+  animation: nb-leak 11s ease-in-out infinite alternate;
+}
+
+@keyframes nb-leak {
+  from {
+    transform: translate3d(-6%, 0, 0);
+  }
+  to {
+    transform: translate3d(6%, 0, 0);
+  }
+}
+
+.nb-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 52%, rgba(4, 2, 10, 0.75) 100%);
+}

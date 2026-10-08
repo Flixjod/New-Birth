@@ -1,132 +1,111 @@
 # New-Birth ✦
 
 A premium, mobile-first **cinematic birthday surprise website** — a personal
-digital gift that unfolds like a film:
+digital gift that unfolds like one continuous film, not a website.
 
-**Mystery → Countdown → Midnight Reveal → Celebration → Personal Message → Memories → Interactive Scrapbook → Surprise → Final Letter**
+**Intro → Mystery → Countdown → Midnight Reveal → 3D Memory World →
+Sketchbook → Scrapbook → Gallery → Personal Message → Things I Love About
+You → Hidden Surprise → iPhone Love Message → Cake & Wish → Final Letter →
+Ending**
 
-Built with React + Vite, styled in a sophisticated midnight-purple palette
-with canvas particles, bokeh, glow, glassmorphism and film grain.
-
----
-
-## ✨ Features
-
-- **Cinematic opening** — dark screen, drifting purple particles, “I made something for you…”
-- **Live countdown** to 12:00 AM on the birthday in an explicit IANA timezone
-  (`Asia/Kolkata` by default) — accurate regardless of the visitor’s device timezone.
-  The atmosphere thickens as midnight approaches; the final 10 seconds take over
-  the screen before a dramatic light-bloom reveal of **HAPPY BIRTHDAY + glowing name**.
-- **Interactive celebration** — floating balloons, confetti, and a CSS birthday cake:
-  hold to blow out the candles and send a wish to the stars.
-- **Personal message** with progressive word-by-word reveals + appreciation cards.
-- **Draggable memory scrapbook** — polaroid cards you can pick up and move
-  (touch + mouse), handwritten notes, hidden notes tucked behind photos,
-  and a sealed note to tap open.
-- **Cinematic gallery** — horizontal swipe; photos resolve blurred → sharp with
-  caption reveals and a soft purple glow.
-- **“OPEN ME ✦” surprise** — the world dims, an envelope blooms open.
-- **Final letter** — unfolding letter, glowing closing, share + replay.
-- **Extras** — optional background music with floating toggle, Web Share API,
-  replay-the-night button, desktop parallax touches, touch-reactive particles,
-  `prefers-reduced-motion` support, lazy-loaded images.
-- **One config file** — every name, date, photo, note and message lives in
-  `src/config/birthdayConfig.js`.
+Built with React 18 + Vite + framer-motion. Midnight-violet palette,
+canvas particles, bokeh, glow, film grain, light leaks.
 
 ---
 
-## 🚀 Quick start
+## The two-minute personalization
+
+**Edit one file: `src/config/birthday.js`.** Everything personal lives
+there — name, birthday, messages, reasons, photos, sketchbook pages, the
+phone conversation, the final letter, music. The whole experience reshapes
+itself around whatever you put in it.
+
+The file imports section modules from `src/config/` so the story stays
+organized as it grows:
+
+| Module | What it holds |
+|---|---|
+| `birthday.js` | **The only file you need to edit.** Name, date, timezone, reasons, surprise, wish, audio |
+| `memories.js` | Photos + captions, scrapbook notes, the sealed note |
+| `messages.js` | Intro lines, personal message, final letter |
+| `sketchbook.js` | "A little book of us" pages (`title` / `memory` / `letter` / `photos`) |
+| `phoneMessages.js` | The iPhone conversation (text + natural typing delays) |
+| `theme.js` | Palette, fonts, story order |
+
+## Adding your photos
+
+Drop webp files (best quality/size) into `public/images/`:
+
+```
+public/images/
+├── memories/        ← story photos (memory-01.webp, memory-02.webp, …)
+├── sketchbook/      ← book textures, tape, stickers (+ doodles/)
+├── phone/           ← phone scene assets (+ message-assets/)
+├── decorations/     ← stars, hearts, light-leaks
+└── audio/ …         ← see below
+```
+
+Then point the config at them. Missing images degrade gracefully — every
+scene renders a designed gradient placeholder, so the story never breaks
+while you're still gathering photos.
+
+## Music
+
+Drop tracks into `public/audio/` (`birthday.mp3` loops through the story,
+`midnight.mp3` fires at the reveal, `message.mp3` at the phone scene) and
+set `audio.enabled: true` in `src/config/birthday.js`. Music starts on the
+visitor's first tap, per mobile autoplay rules.
+
+## Project structure
+
+```
+src/
+├── app/            ← App.jsx, Experience.jsx (story controller), experienceFlow.js
+├── config/         ← the story's words & pictures (see table above)
+├── scenes/         ← one folder per story chapter (Intro … Ending)
+├── components/
+│   ├── UI/         ← Button, IconButton, ProgressIndicator
+│   ├── Effects/    ← ParticleField, Glow, Grain, Bokeh, LightLeak, Vignette
+│   └── Audio/      ← AudioManager, MusicToggle, useAudio
+├── animations/     ← transitions/, memory/, phone/, scrapbook/ (framer-motion variants)
+├── hooks/          ← useCountdown, useSwipe, usePointerDrag, useParallax, …
+├── utils/          ← timezone, countdown, device, random, preloadImages, …
+└── styles/         ← variables, globals, typography, responsive, safe-area, reduced-motion
+```
+
+**The story controller** (`src/app/Experience.jsx`) renders one scene at a
+time with cinematic crossfades. Scenes advance themselves via `onNext()`.
+To reorder chapters, reorder `src/app/experienceFlow.js`. To add a chapter,
+build its scene folder and register it there.
+
+**Animation code lives apart from UI** (`src/animations/`) — scenes stay
+readable, motion stays reusable.
+
+## Performance rules (enforced, not suggested)
+
+- The 3D memory world is CSS-3D only (no WebGL lib) and auto-degrades:
+  fewer photos, particles, and gentler camera on mobile / low-power devices.
+- Animations use `transform` / `opacity` / `filter` exclusively.
+- Every scene honors `prefers-reduced-motion`.
+- Images are preloaded per chapter; audio files are optional.
+
+## Develop & build
 
 ```bash
 npm install
-npm run dev      # → http://localhost:5173
-npm run build    # → dist/
+npm run dev      # local preview at http://localhost:5173
+npm run build    # production build → dist/
 ```
 
-## 🎨 Make it yours
-
-Everything personal lives in **`src/config/birthdayConfig.js`**:
-
-```js
-export const birthdayConfig = {
-  name: 'Aarohi',                 // the glowing name
-  birthday: '2026-09-01',         // YYYY-MM-DD — countdown targets 00:00
-  timezone: 'Asia/Kolkata',       // explicit IANA timezone
-  message: '...',                // your personal message
-  memories: [                    // scrapbook + gallery photos
-    { image: '/images/photo1.webp', date: 'August 2026', note: '...' },
-  ],
-  reasons: ['...'],               // appreciation cards
-  audio: { enabled: false, src: '/audio/birthday.mp3', volume: 0.35 },
-};
-```
-
-1. **Photos** — drop your `.webp`/`.jpg` files into `public/images/`
-   (WebP/AVIF recommended) and update the `image` paths.
-2. **Music** — drop your track at `public/audio/birthday.mp3` and set
-   `audio.enabled: true`. Music starts on the ENTER tap (mobile autoplay rules).
-3. **Copy** — rewrite every note, message, surprise and the letter in your own words.
-
-> Tip: if the birthday date is in the past, the countdown shows “It’s time ✦”
-> and flows straight into the reveal — handy for testing.
-
----
-
-## 🐳 Docker
+Docker:
 
 ```bash
-docker compose up --build     # → http://localhost:8080
+docker compose up --build   # serves dist/ via nginx
 ```
 
-The multi-stage `Dockerfile` builds the Vite app with Node 20 and serves the
-static output with nginx (SPA fallback, gzip, immutable asset caching).
+## Countdown behavior
 
-## ☁️ Deploy on Koyeb
-
-1. Push this repo to GitHub as **`New-Birth`**.
-2. In [Koyeb](https://app.koyeb.com), create a new **Service → from GitHub**,
-   select the repo.
-3. Builder: **Dockerfile** (default — Koyeb detects it automatically).
-4. Port: **80** (HTTP). Health checks: default TCP check on port 80 works.
-5. Deploy — you’ll get a `*.koyeb.app` URL. Point a custom domain at it in
-   *Service → Domains* if you like.
-
-No environment variables or secrets are required.
-
-## 🌐 Other static hosts
-
-`npm run build` produces a static `dist/` folder — deploy it anywhere
-(Netlify, Vercel, Cloudflare Pages, GitHub Pages). No server code involved.
-
----
-
-## 📁 Project structure
-
-```
-New-Birth/
-├── public/
-│   ├── images/            # your memory photos (placeholders included)
-│   └── audio/             # birthday.mp3 goes here (optional)
-├── src/
-│   ├── components/        # Intro, Countdown, Reveal, Celebration, Message,
-│   │                      # Scrapbook, Gallery, Surprise, FinalLetter, …
-│   ├── animations/        # (animation helpers live beside components)
-│   ├── config/            # ★ birthdayConfig.js — everything personal
-│   ├── hooks/             # useCountdown, useInView, useReducedMotion
-│   ├── utils/             # timezone-accurate countdown math
-│   └── styles/            # cinematic purple theme, mobile-first
-├── Dockerfile             # multi-stage build → nginx
-├── nginx.conf
-├── docker-compose.yml
-└── README.md
-```
-
-## 📱 Mobile notes
-
-- Designed mobile-first: `100dvh`, safe-area insets, `touch-action` handling,
-  no horizontal scrolling, reduced particle counts on small screens.
-- Tested targets: iPhone Safari, Android Chrome, tablets, desktop.
-
----
-
-Made with ♥ — now go make someone’s midnight unforgettable.
+The countdown targets **00:00 on the birthday in the configured IANA
+timezone** (`Asia/Kolkata` by default), accurate wherever the visitor is.
+If the date has already passed, the countdown scene acknowledges it and
+offers to continue — the story never dead-ends.

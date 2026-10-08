@@ -1,0 +1,320 @@
+/* FinalLetter — midnight violet letter scene */
+
+.fl-root {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(120% 90% at 50% 110%, rgba(124, 58, 237, 0.22) 0%, rgba(7, 4, 15, 0) 60%),
+    var(--bg);
+  overflow: hidden;
+}
+
+.fl-stage {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 34rem;
+  padding: clamp(3.5rem, 8vh, 5.5rem) clamp(1.25rem, 6vw, 2.5rem) clamp(4rem, 9vh, 6rem);
+  display: flex;
+  justify-content: center;
+}
+
+.fl-phase {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* ---------- Envelope ---------- */
+
+.fl-envelope-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  text-align: center;
+}
+
+.fl-teaser {
+  font-family: var(--font-script);
+  font-size: clamp(2.1rem, 7vw, 3rem);
+  color: var(--lavender);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.fl-envelope {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  perspective: 900px;
+}
+
+.fl-envelope:focus-visible {
+  outline: 2px solid var(--lavender);
+  outline-offset: 10px;
+  border-radius: 8px;
+}
+
+.fl-envelope-body {
+  position: relative;
+  display: block;
+  width: clamp(19rem, 80vw, 24rem);
+  aspect-ratio: 1.45 / 1;
+  transform-style: preserve-3d;
+}
+
+.fl-envelope-pocket,
+.fl-envelope-card,
+.fl-envelope-flap {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+}
+
+.fl-envelope-pocket {
+  background:
+    linear-gradient(135deg, rgba(124, 58, 237, 0.32), rgba(139, 92, 246, 0.14) 55%),
+    #150c2b;
+  border: 1px solid rgba(167, 139, 250, 0.28);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    0 0 60px rgba(124, 58, 237, 0.22);
+  clip-path: polygon(0 0, 50% 44%, 100% 0, 100% 100%, 0 100%);
+}
+
+.fl-envelope-card {
+  inset: 6%;
+  background: linear-gradient(160deg, #241741, #191028);
+  border: 1px solid rgba(196, 181, 253, 0.35);
+  border-radius: 6px;
+  transform: translateZ(-1px) translateY(0);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fl-envelope-flap {
+  background:
+    linear-gradient(180deg, rgba(167, 139, 250, 0.34), rgba(124, 58, 237, 0.18)),
+    #1c1233;
+  border: 1px solid rgba(167, 139, 250, 0.34);
+  clip-path: polygon(0 0, 100% 0, 50% 46%);
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  transition: transform 0.9s cubic-bezier(0.6, 0, 0.3, 1);
+  z-index: 3;
+}
+
+.fl-envelope-seal {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  width: 3rem;
+  height: 3rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--royal), var(--violet) 70%);
+  border: 1px solid rgba(245, 243, 255, 0.35);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fl-envelope-heart {
+  color: var(--pink);
+  font-size: 1.25rem;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.fl-envelope.fl-open .fl-envelope-flap {
+  transform: rotateX(-178deg);
+  z-index: 1;
+}
+
+.fl-envelope.fl-open .fl-envelope-card {
+  transform: translateZ(0) translateY(-18%);
+}
+
+.fl-envelope.fl-open .fl-envelope-seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+}
+
+.fl-tap-hint {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ---------- Letter reveal ---------- */
+
+.fl-reveal {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fl-reveal-scroll {
+  width: 100%;
+  max-height: calc(100dvh - 11rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.5rem 0.25rem 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(167, 139, 250, 0.4) transparent;
+}
+
+.fl-reveal-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.fl-reveal-scroll::-webkit-scrollbar-thumb {
+  background: rgba(167, 139, 250, 0.4);
+  border-radius: 4px;
+}
+
+.fl-paper {
+  background:
+    linear-gradient(175deg, #1b1132 0%, #140c26 100%);
+  border: 1px solid rgba(196, 181, 253, 0.3);
+  border-radius: 14px;
+  padding: clamp(1.75rem, 6vw, 2.75rem) clamp(1.4rem, 6vw, 2.4rem);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.5),
+    0 0 46px rgba(124, 58, 237, 0.16);
+  transform-origin: top center;
+}
+
+.fl-greeting {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 6.4vw, 2.6rem);
+  color: var(--pink);
+  margin: 0 0 1.25rem;
+  line-height: 1.25;
+}
+
+.fl-body {
+  font-family: var(--font-hand);
+  font-size: clamp(1.15rem, 4.4vw, 1.4rem);
+  line-height: 1.85;
+  color: var(--lilac);
+  margin: 0 0 1.1rem;
+}
+
+.fl-body:last-of-type {
+  margin-bottom: 0;
+}
+
+.fl-signoff {
+  font-family: var(--font-script);
+  font-size: clamp(1.6rem, 5.6vw, 2.1rem);
+  color: var(--lavender);
+  text-align: right;
+  margin: 1.6rem 0 0;
+  line-height: 1.35;
+}
+
+.fl-finish {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0 0.5rem;
+}
+
+.fl-hidden-btn {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.fl-scroll-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.1rem;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.fl-scroll-line {
+  display: block;
+  width: 1px;
+  height: 2.2rem;
+  background: linear-gradient(180deg, var(--lavender), transparent);
+}
+
+/* ---------- Closing ---------- */
+
+.fl-closing {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.1rem;
+}
+
+.fl-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+}
+
+.fl-hbd {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 10vw, 4.2rem);
+  letter-spacing: 0.12em;
+  color: var(--white);
+  margin: 0;
+  text-shadow: 0 0 34px rgba(167, 139, 250, 0.55);
+}
+
+.fl-name {
+  font-family: var(--font-script);
+  font-size: clamp(2.6rem, 11vw, 4.4rem);
+  color: var(--pink);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.fl-closing-line {
+  font-family: var(--font-hand);
+  font-size: clamp(1.15rem, 4.6vw, 1.45rem);
+  color: var(--lilac);
+  margin: 0.5rem 0 0;
+  max-width: 26rem;
+  line-height: 1.7;
+}
+
+.fl-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fl-envelope-flap,
+  .fl-envelope-card,
+  .fl-envelope-seal {
+    transition: none;
+  }
+}

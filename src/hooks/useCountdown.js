@@ -1,24 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
-import { midnightInZoneMs, splitDuration } from '../utils/time';
+import { useEffect, useState } from 'react';
+import { getCountdown } from '../utils/countdown';
 
-/**
- * Ticks toward 00:00 on the birthday in the configured timezone.
- * Returns { days, hours, minutes, seconds, total, done }.
- */
+/** Live countdown to midnight of `birthday` in `timezone` (~4 updates/sec). */
 export function useCountdown(birthday, timezone) {
-  const targetRef = useRef(0);
-  if (!targetRef.current) {
-    targetRef.current = midnightInZoneMs(birthday, timezone);
-  }
-  const [now, setNow] = useState(() => Date.now());
+  const [state, setState] = useState(() => getCountdown(birthday, timezone));
 
   useEffect(() => {
-    // Faster ticks in the final stretch so the last seconds feel alive.
-    const id = setInterval(() => setNow(Date.now()), 200);
+    setState(getCountdown(birthday, timezone));
+    const id = setInterval(() => setState(getCountdown(birthday, timezone)), 250);
     return () => clearInterval(id);
-  }, []);
+  }, [birthday, timezone]);
 
-  const remaining = targetRef.current - now;
-  const parts = splitDuration(remaining);
-  return { ...parts, done: remaining <= 0 };
+  return state; // { days, hours, minutes, seconds, total, isLive }
 }

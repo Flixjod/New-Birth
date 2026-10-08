@@ -1,0 +1,352 @@
+/* Cake — cake- — CSS birthday cake with candles */
+
+.cake-root {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(110% 70% at 50% 100%, #241040 0%, var(--bg) 62%),
+    var(--bg);
+  padding: clamp(3.5rem, 9vw, 5rem) clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.cake-atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cake-back {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  left: 1rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  opacity: 0.55;
+  padding: 0.75rem;
+  z-index: 3;
+  transition: opacity 0.4s ease;
+}
+
+.cake-back:hover {
+  opacity: 1;
+}
+
+.cake-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 40rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cake-kicker {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--lavender);
+  opacity: 0.75;
+  margin: 0 0 1rem;
+}
+
+.cake-title {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 10vw, 4rem);
+  line-height: 1.2;
+  color: var(--white);
+  margin: 0 0 clamp(1.5rem, 5vw, 2.5rem);
+  text-shadow: 0 0 40px rgba(240, 171, 252, 0.35);
+}
+
+/* ── Cake ───────────────────────────────────────────────── */
+
+.cake-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: clamp(2rem, 6vw, 3rem);
+}
+
+.cake-candles {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: clamp(1.4rem, 6vw, 2.4rem);
+  margin-bottom: -0.4rem;
+  z-index: 2;
+}
+
+.cake-candle {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1.1rem;
+}
+
+.cake-stick {
+  width: 1.1rem;
+  height: clamp(3.4rem, 14vw, 4.6rem);
+  border-radius: 0.5rem 0.5rem 0.25rem 0.25rem;
+  background: repeating-linear-gradient(
+    -45deg,
+    #f0abfc 0 0.45rem,
+    #a78bfa 0.45rem 0.9rem
+  );
+  box-shadow: inset -3px 0 6px rgba(0, 0, 0, 0.35);
+}
+
+.cake-wick {
+  width: 0.14rem;
+  height: 0.7rem;
+  background: #2a1650;
+  border-radius: 2px;
+  margin-bottom: -0.1rem;
+}
+
+.cake-flame {
+  position: relative;
+  width: 1.6rem;
+  height: 2.6rem;
+  margin-bottom: 0.25rem;
+  transform-origin: 50% 100%;
+  animation: cake-flicker 0.9s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * -0.23s);
+}
+
+.cake-flame-still {
+  animation: none;
+}
+
+@keyframes cake-flicker {
+  0%, 100% { transform: scale(1, 1) skewX(0deg); opacity: 1; }
+  25% { transform: scale(0.94, 1.08) skewX(2deg); opacity: 0.92; }
+  50% { transform: scale(1.05, 0.94) skewX(-3deg); opacity: 1; }
+  75% { transform: scale(0.97, 1.05) skewX(1deg); opacity: 0.95; }
+}
+
+.cake-flame-core {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0.9rem;
+  height: 1.7rem;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(circle at 50% 72%, #fff7d6 0%, #ffd66e 38%, #ff9d5c 68%, rgba(255, 120, 90, 0) 78%);
+  filter: blur(1px);
+}
+
+.cake-flame-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -0.5rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 190, 110, 0.5), rgba(240, 171, 252, 0.18) 55%, transparent 70%);
+  filter: blur(4px);
+}
+
+.cake-smoke-wrap {
+  height: 2.85rem;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.cake-smoke {
+  width: 0.5rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: linear-gradient(to top, rgba(196, 181, 253, 0), rgba(196, 181, 253, 0.75));
+  filter: blur(3px);
+  transform-origin: 50% 100%;
+  animation: cake-smoke-rise 3.2s ease-out forwards;
+}
+
+.cake-smoke-still {
+  animation-duration: 1.2s;
+}
+
+@keyframes cake-smoke-rise {
+  0% { transform: translateY(0.6rem) scaleX(1); opacity: 0; }
+  20% { opacity: 0.8; }
+  100% { transform: translateY(-2.2rem) scaleX(1.8); opacity: 0; }
+}
+
+.cake-tiers {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.cake-tier {
+  position: relative;
+  border-radius: 0.7rem;
+  overflow: hidden;
+}
+
+.cake-tier-top {
+  width: clamp(10rem, 44vw, 14rem);
+  height: clamp(4.2rem, 17vw, 5.4rem);
+  background: linear-gradient(180deg, #f0abfc, #c084fc 45%, #8b5cf6);
+  box-shadow: inset 0 -10px 24px rgba(60, 20, 120, 0.45), inset 0 8px 18px rgba(255, 255, 255, 0.25);
+  z-index: 2;
+}
+
+.cake-tier-bottom {
+  width: clamp(14rem, 62vw, 19rem);
+  height: clamp(5.2rem, 21vw, 6.6rem);
+  margin-top: -0.4rem;
+  background: linear-gradient(180deg, #a78bfa, #7c3aed 55%, #5b21b6);
+  box-shadow: inset 0 -12px 28px rgba(30, 8, 70, 0.55), inset 0 10px 22px rgba(255, 255, 255, 0.22);
+  z-index: 1;
+}
+
+.cake-drip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.5rem;
+  background:
+    radial-gradient(circle at 8% 0, #fff 0 0.55rem, transparent 0.6rem),
+    radial-gradient(circle at 26% 0, #fff 0 0.75rem, transparent 0.8rem),
+    radial-gradient(circle at 47% 0, #fff 0 0.5rem, transparent 0.55rem),
+    radial-gradient(circle at 66% 0, #fff 0 0.7rem, transparent 0.75rem),
+    radial-gradient(circle at 86% 0, #fff 0 0.55rem, transparent 0.6rem);
+  opacity: 0.85;
+}
+
+.cake-plate {
+  width: clamp(17rem, 76vw, 23rem);
+  height: 1.1rem;
+  margin-top: -0.2rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 30%, #e9e2ff, #8f7fc9 60%, #4a3a7a);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+}
+
+.cake-shadow {
+  width: clamp(15rem, 68vw, 21rem);
+  height: 1.6rem;
+  margin-top: 0.9rem;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.6), transparent 70%);
+  filter: blur(6px);
+}
+
+/* ── Wish interaction ───────────────────────────────────── */
+
+.cake-wish {
+  min-height: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cake-hold {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1.2rem 2rem;
+  color: var(--white);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.cake-hold-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.4rem;
+  border: 1px solid rgba(240, 171, 252, 0.4);
+  background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.22), transparent 70%);
+}
+
+.cake-hold-label {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--lilac);
+  text-shadow: 0 0 16px rgba(240, 171, 252, 0.5);
+}
+
+.cake-hold-track {
+  width: 11rem;
+  height: 0.3rem;
+  border-radius: 999px;
+  background: rgba(167, 139, 250, 0.18);
+  overflow: hidden;
+}
+
+.cake-hold-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--violet), var(--pink));
+  transform-origin: left center;
+  transform: scaleX(0);
+  box-shadow: 0 0 12px rgba(240, 171, 252, 0.7);
+}
+
+/* ── Wished ─────────────────────────────────────────────── */
+
+.cake-wished {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.2rem;
+  min-height: 7rem;
+  justify-content: center;
+}
+
+.cake-wished-text {
+  font-family: var(--font-script);
+  font-size: clamp(2.2rem, 9vw, 3.4rem);
+  line-height: 1.3;
+  color: var(--pink);
+  margin: 0;
+  text-shadow: 0 0 36px rgba(240, 171, 252, 0.55);
+}
+
+.cake-continue {
+  min-width: 11rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cake-flame,
+  .cake-smoke {
+    animation: none;
+  }
+  .cake-back {
+    transition: none;
+  }
+}

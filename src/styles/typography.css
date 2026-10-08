@@ -1,0 +1,68 @@
+/* New-Birth · typography.css — the voice of the story */
+
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.t-script {
+  font-family: var(--font-script);
+  font-weight: 400;
+}
+
+.t-hand {
+  font-family: var(--font-hand);
+  font-weight: 500;
+}
+
+.t-ui {
+  font-family: var(--font-ui);
+}
+
+/* Hero name — the glowing signature moment */
+.t-hero-name {
+  font-family: var(--font-script);
+  font-size: clamp(3.4rem, 14vw, 7rem);
+  line-height: 1.1;
+  background: linear-gradient(160deg, #fff 20%, var(--lilac) 55%, var(--pink) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 26px rgba(167, 139, 250, 0.55));
+}
+
+/* Chapter eyebrow label, e.g. "CHAPTER THREE" */
+.t-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* Large serif headline */
+.t-headline {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 7vw, 3rem);
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+}
+
+/* Quiet body copy */
+.t-body {
+  font-family: var(--font-ui);
+  font-weight: 300;
+  font-size: clamp(0.95rem, 3.8vw, 1.08rem);
+  line-height: 1.85;
+  color: var(--muted);
+}
+
+/* Handwritten note */
+.t-note {
+  font-family: var(--font-hand);
+  font-size: clamp(1.25rem, 5.4vw, 1.6rem);
+  line-height: 1.5;
+  color: var(--lilac);
+}

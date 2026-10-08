@@ -1,0 +1,34 @@
+/* New-Birth · responsive.css — small screens get the same cinema, closer up */
+
+@media (max-width: 640px) {
+  .nb-scene {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .nb-btn {
+    padding: 14px 32px;
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 900px) {
+  .nb-scene {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
+/* Utilities */
+.nb-hide-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .nb-hide-mobile {
+    display: revert;
+  }
+  .nb-hide-desktop {
+    display: none;
+  }
+}

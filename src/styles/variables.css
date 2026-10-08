@@ -1,0 +1,35 @@
+/* New-Birth · variables.css — palette, type, motion tokens */
+
+:root {
+  /* Midnight violet palette */
+  --bg: #07040f;
+  --bg-2: #0d0718;
+  --bg-3: #150b28;
+  --violet-deep: #2a1650;
+  --violet: #7c3aed;
+  --royal: #8b5cf6;
+  --lavender: #a78bfa;
+  --lilac: #c4b5fd;
+  --pink: #f0abfc;
+  --pink-soft: #f5d0fe;
+  --white: #f5f3ff;
+  --muted: rgba(245, 243, 255, 0.62);
+  --faint: rgba(245, 243, 255, 0.38);
+  --glass: rgba(139, 92, 246, 0.08);
+  --glass-border: rgba(167, 139, 250, 0.22);
+
+  /* Type */
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-script: 'Great Vibes', 'Snell Roundhand', cursive;
+  --font-hand: 'Caveat', 'Segoe Script', cursive;
+  --font-ui: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+
+  /* Motion */
+  --ease-cinema: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Safe areas */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}

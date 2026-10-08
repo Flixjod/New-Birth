@@ -1,0 +1,87 @@
+/* ── Intro — dark screen, slow lines, single way forward ───────────── */
+
+.intro-scene {
+  position: relative;
+  min-height: 100dvh;
+  background: var(--bg, #07040f);
+  color: var(--white, #f5f3ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: clamp(2rem, 6vw, 5rem) clamp(1.5rem, 6vw, 4rem);
+}
+
+.intro-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.intro-stage {
+  position: relative;
+  z-index: 2;
+  max-width: 46rem;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 4.5vh, 3rem);
+}
+
+.intro-line {
+  margin: 0;
+  font-family: var(--font-display, 'Cormorant Garamond', serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 5.4vw, 2.9rem);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  color: var(--white, #f5f3ff);
+  text-wrap: balance;
+}
+
+.intro-line-script {
+  font-family: var(--font-script, 'Great Vibes', cursive);
+  font-style: normal;
+  font-size: clamp(2.1rem, 7vw, 3.6rem);
+  color: var(--pink, #f0abfc);
+  letter-spacing: 0.01em;
+}
+
+.intro-cta {
+  margin-top: clamp(1.5rem, 6vh, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.intro-enter {
+  min-width: 12rem;
+  letter-spacing: 0.35em;
+  text-indent: 0.35em;
+  animation: intro-breathe 4s ease-in-out infinite;
+}
+
+.intro-hint {
+  margin: 0;
+  font-family: var(--font-ui, 'Inter', sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted, rgba(245, 243, 255, 0.45));
+}
+
+/* transform + opacity only */
+@keyframes intro-breathe {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.04); opacity: 0.92; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-enter {
+    animation: none;
+  }
+}

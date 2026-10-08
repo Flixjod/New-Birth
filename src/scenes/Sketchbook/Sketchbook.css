@@ -1,0 +1,775 @@
+/* ============================================================
+   Sketchbook scene — "A LITTLE BOOK OF US"
+   All classes prefixed with skb-. Plain global CSS.
+   Design language: midnight violet; paper pages in warm cream.
+   Animations: transform / opacity / filter only.
+   ============================================================ */
+
+.skb-scene {
+  --skb-paper: #f4ecd9;
+  --skb-paper-deep: #e9dec4;
+  --skb-ink: #5b3fae;
+  --skb-ink-soft: #7a63c9;
+  --skb-pencil: #8b7fc7;
+
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 16px 32px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 8%, #170b33 0%, #0b0619 48%, #07040f 100%);
+  color: var(--white);
+  font-family: var(--font-ui);
+}
+
+.skb-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.skb-bg > * {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------------- Closed book phase ---------------- */
+
+.skb-closed {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.skb-back {
+  position: absolute;
+  top: -8px;
+  left: -4px;
+}
+
+.skb-book3d {
+  perspective: 1200px;
+  /* parallax target: hook sets --px / --py */
+  transform: translate3d(calc(var(--px, 0) * 14px), calc(var(--py, 0) * 10px), 0);
+  transition: transform 0.25s ease-out;
+}
+
+.skb-closed-book {
+  position: relative;
+  width: min(62vw, 230px);
+  aspect-ratio: 5 / 7;
+  transform-style: preserve-3d;
+  transform: rotateY(-18deg) rotateX(5deg);
+  animation: skb-float 7s ease-in-out infinite;
+  filter: drop-shadow(0 34px 44px rgba(0, 0, 0, 0.55));
+}
+
+@keyframes skb-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -12px; }
+}
+
+.skb-cover-front,
+.skb-cover-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px 12px 12px 4px;
+  backface-visibility: hidden;
+}
+
+.skb-cover-front {
+  transform: translateZ(16px);
+  background:
+    linear-gradient(135deg, rgba(124, 58, 237, 0.22), rgba(0, 0, 0, 0.25)),
+    linear-gradient(160deg, #2c1557 0%, #1a0c38 55%, #100722 100%);
+  border: 1px solid rgba(240, 171, 252, 0.28);
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skb-cover-front::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(196, 181, 253, 0.35);
+  border-radius: 2px 8px 8px 2px;
+  pointer-events: none;
+}
+
+.skb-cover-back {
+  transform: rotateY(180deg) translateZ(16px);
+  background: linear-gradient(160deg, #160a30, #0b0519);
+  border: 1px solid rgba(240, 171, 252, 0.12);
+}
+
+.skb-spine {
+  position: absolute;
+  top: 1%;
+  bottom: 1%;
+  left: 0;
+  width: 32px;
+  transform: translateX(-16px) rotateY(90deg);
+  background: linear-gradient(to bottom, #241147, #150a2e 60%, #0d061e);
+  border-left: 1px solid rgba(240, 171, 252, 0.2);
+}
+
+.skb-pages-edge {
+  position: absolute;
+  top: 1.5%;
+  bottom: 1.5%;
+  right: 0;
+  width: 30px;
+  transform: translateX(15px) rotateY(90deg);
+  background: repeating-linear-gradient(to right, #ece4d0 0 2px, #c9bfa6 2px 3px);
+  border-radius: 0 2px 2px 0;
+}
+
+.skb-cover-copy {
+  text-align: center;
+  padding: 0 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.skb-cover-kicker {
+  font-family: var(--font-script);
+  font-size: 26px;
+  color: var(--lilac);
+  margin: 0;
+  opacity: 0.95;
+}
+
+.skb-cover-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 54px;
+  letter-spacing: 0.14em;
+  color: var(--white);
+  margin: 0;
+  text-shadow: 0 2px 18px rgba(167, 139, 250, 0.45);
+}
+
+.skb-cover-rule {
+  width: 54px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--pink), transparent);
+  opacity: 0.7;
+}
+
+.skb-cover-name {
+  font-family: var(--font-hand);
+  font-size: 20px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.skb-cover-sticker {
+  position: absolute;
+  right: 22px;
+  bottom: 26px;
+  opacity: 0.9;
+}
+
+.skb-glow {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.35) 0%, transparent 65%);
+  filter: blur(50px);
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+.skb-open-hint {
+  font-family: var(--font-hand);
+  font-size: 19px;
+  color: var(--muted);
+  margin: 0;
+  text-align: center;
+}
+
+/* ---------------- Open book phase ---------------- */
+
+.skb-open {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.skb-bookwrap {
+  perspective: 1600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  transform: translate3d(calc(var(--px, 0) * 10px), calc(var(--py, 0) * 8px), 0);
+  transition: transform 0.22s ease-out;
+}
+
+.skb-book {
+  position: relative;
+  width: min(88vw, 380px);
+  aspect-ratio: 3 / 4;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+/* stacked pages peeking behind the current one */
+.skb-book::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translate(7px, 7px);
+  background: var(--skb-paper-deep);
+  border-radius: 4px 12px 12px 4px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+}
+
+.skb-book:hover {
+  transform: translateY(-4px);
+}
+
+.skb-page-static {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.skb-page {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px 12px 12px 4px;
+  background:
+    linear-gradient(105deg, #ece1c8 0%, var(--skb-paper) 9%, #f6efdb 100%);
+  box-shadow:
+    inset 0 0 40px rgba(120, 90, 40, 0.08),
+    0 18px 44px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  color: #3a2c5e;
+}
+
+/* paper grain */
+.skb-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+}
+
+/* spine shadow on the binding edge */
+.skb-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(58, 32, 96, 0.32), rgba(58, 32, 96, 0.06) 9%, transparent 16%);
+}
+
+.skb-page-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 20px;
+  z-index: 1;
+}
+
+.skb-page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+  min-height: 20px;
+}
+
+.skb-date {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--skb-ink-soft);
+  opacity: 0.85;
+}
+
+.skb-folio {
+  font-family: var(--font-hand);
+  font-size: 15px;
+  color: var(--skb-ink-soft);
+  opacity: 0.7;
+}
+
+.skb-page-body {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------- Page turn overlay ---------------- */
+
+.skb-turn {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  filter: drop-shadow(-14px 8px 18px rgba(20, 8, 40, 0.35));
+}
+
+.skb-turn-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 4px 12px 12px 4px;
+  background: linear-gradient(to left, rgba(46, 22, 88, 0.28), transparent 45%);
+}
+
+/* ---------------- Title page ---------------- */
+
+.skb-titlepage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+  padding: 12px 6px;
+}
+
+.skb-titlepage-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(30px, 8.5vw, 42px);
+  line-height: 1.12;
+  color: #2e1d5e;
+  margin: 0;
+}
+
+.skb-titlepage-sub {
+  font-family: var(--font-script);
+  font-size: clamp(24px, 6.5vw, 32px);
+  color: var(--skb-ink);
+  margin: 0;
+  max-width: 26ch;
+}
+
+.skb-titlepage-rule {
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--skb-ink-soft), transparent);
+  opacity: 0.6;
+  margin-top: 6px;
+}
+
+/* ---------------- Memory page ---------------- */
+
+.skb-memory {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.skb-memory .skb-photo {
+  width: 76%;
+}
+
+/* ---------------- Letter page ---------------- */
+
+.skb-letter {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-image: repeating-linear-gradient(
+    transparent 0 31px,
+    rgba(124, 58, 237, 0.1) 31px 32px
+  );
+  border-radius: 3px;
+  padding: 6px 4px;
+}
+
+.skb-letter .skb-note {
+  font-size: 23px;
+}
+
+.skb-letter-ps {
+  margin-top: 14px;
+  align-self: flex-end;
+}
+
+/* ---------------- Photos collage page ---------------- */
+
+.skb-collage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6px 0;
+}
+
+.skb-collage .skb-photo {
+  width: 64%;
+  margin-top: -26px;
+}
+
+.skb-collage .skb-photo:first-child {
+  margin-top: 0;
+  align-self: flex-start;
+}
+
+.skb-collage .skb-photo:nth-child(2) {
+  align-self: flex-end;
+}
+
+.skb-collage .skb-photo:nth-child(3) {
+  align-self: center;
+  width: 58%;
+}
+
+.skb-collage-cap {
+  align-self: center;
+  margin-top: 16px;
+  max-width: 30ch;
+  text-align: center;
+}
+
+.skb-collage-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: #2e1d5e;
+  text-align: center;
+  margin: 0 0 10px;
+}
+
+/* ---------------- End page ---------------- */
+
+.skb-end {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  padding: 12px 8px;
+}
+
+.skb-end-line {
+  font-family: var(--font-script);
+  font-size: clamp(26px, 7vw, 34px);
+  line-height: 1.3;
+  color: var(--skb-ink);
+  margin: 0;
+  max-width: 24ch;
+}
+
+.skb-end-sub {
+  font-family: var(--font-hand);
+  font-size: 19px;
+  color: var(--skb-ink-soft);
+  margin: 0;
+}
+
+/* ---------------- Photo card ---------------- */
+
+.skb-photo {
+  margin: 0;
+  transform: rotate(var(--skb-rot, -2deg));
+  transition: transform 0.5s ease;
+  filter: drop-shadow(0 10px 16px rgba(46, 22, 88, 0.28));
+}
+
+.skb-book:hover .skb-photo {
+  transform: rotate(0deg);
+}
+
+.skb-photo-frame {
+  position: relative;
+  background: #fffdf6;
+  padding: 10px 10px 12px;
+  border-radius: 2px;
+  aspect-ratio: 1 / 1;
+  overflow: visible;
+}
+
+.skb-photo-frame--wide {
+  aspect-ratio: 4 / 3;
+}
+
+.skb-photo-fallback {
+  position: absolute;
+  inset: 10px 10px 12px;
+  border-radius: 1px;
+  background:
+    radial-gradient(90% 70% at 30% 20%, rgba(240, 171, 252, 0.5), transparent 60%),
+    radial-gradient(80% 80% at 75% 80%, rgba(139, 92, 246, 0.45), transparent 60%),
+    linear-gradient(140deg, #3b2169, #1c1038);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.skb-photo-fallback svg {
+  width: 44px;
+  height: 44px;
+  opacity: 0.35;
+}
+
+.skb-photo-img {
+  position: absolute;
+  inset: 10px 10px 12px;
+  width: calc(100% - 20px);
+  height: calc(100% - 22px);
+  object-fit: cover;
+  border-radius: 1px;
+  background: transparent;
+}
+
+.skb-photo-cap {
+  margin-top: 10px;
+  font-family: var(--font-hand);
+  font-size: 17px;
+  color: var(--skb-ink-soft);
+  text-align: center;
+}
+
+/* ---------------- Washi tape ---------------- */
+
+.skb-tape {
+  position: absolute;
+  width: 92px;
+  height: 26px;
+  z-index: 2;
+  opacity: 0.88;
+  box-shadow: 0 1px 3px rgba(46, 22, 88, 0.25);
+  /* torn edge feel */
+  clip-path: polygon(2% 8%, 98% 0%, 100% 88%, 0% 100%);
+}
+
+.skb-tape-lavender {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(196, 181, 253, 0.75) 0 8px,
+    rgba(167, 139, 250, 0.6) 8px 16px
+  );
+}
+
+.skb-tape-pink {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(240, 171, 252, 0.75) 0 8px,
+    rgba(232, 141, 250, 0.6) 8px 16px
+  );
+}
+
+.skb-tape-gold {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(233, 203, 150, 0.8) 0 8px,
+    rgba(214, 178, 110, 0.65) 8px 16px
+  );
+}
+
+.skb-tape-tl { top: -12px; left: -30px; }
+.skb-tape-tr { top: -12px; right: -30px; }
+.skb-tape-bl { bottom: -10px; left: -30px; }
+.skb-tape-br { bottom: -10px; right: -30px; }
+
+/* ---------------- Handwritten note ---------------- */
+
+.skb-note {
+  font-family: var(--font-hand);
+  font-size: 21px;
+  line-height: 1.5;
+  color: var(--skb-ink);
+  margin: 0;
+  transform: rotate(var(--skb-rot, 1.2deg));
+  max-width: 34ch;
+}
+
+.skb-note-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ---------------- Stickers & doodles ---------------- */
+
+.skb-sticker {
+  display: inline-block;
+  filter: drop-shadow(0 3px 5px rgba(46, 22, 88, 0.3));
+  transform: rotate(var(--skb-rot, 0deg));
+  transition: transform 0.4s ease;
+}
+
+.skb-sticker:hover {
+  transform: rotate(0deg) scale(1.15);
+}
+
+.skb-doodle {
+  display: inline-block;
+  opacity: 0.85;
+  transform: rotate(var(--skb-rot, 0deg));
+}
+
+.skb-deco {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---------------- Corner tap zones ---------------- */
+
+.skb-corner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 22%;
+  z-index: 4;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skb-corner-l { left: 0; }
+.skb-corner-r { right: 0; }
+
+.skb-corner::after {
+  content: "‹";
+  position: absolute;
+  top: 50%;
+  font-family: var(--font-display);
+  font-size: 30px;
+  color: var(--skb-ink-soft);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  translate: 0 -50%;
+}
+
+.skb-corner-l::after { left: 10px; }
+.skb-corner-r::after { right: 10px; content: "›"; }
+
+.skb-book:hover .skb-corner::after {
+  opacity: 0.55;
+}
+
+/* ---------------- Controls ---------------- */
+
+.skb-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  z-index: 1;
+}
+
+.skb-ctrl-btn {
+  min-width: 46px;
+  min-height: 46px;
+  font-size: 22px;
+  line-height: 1;
+  padding: 6px 12px;
+}
+
+.skb-ctrl-btn.is-disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.skb-dots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.skb-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  background: rgba(167, 139, 250, 0.3);
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.skb-dot:hover {
+  transform: scale(1.3);
+  background: rgba(167, 139, 250, 0.6);
+}
+
+.skb-dot.is-active {
+  background: var(--lavender);
+  transform: scale(1.4);
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.7);
+}
+
+/* ---------------- Small screens ---------------- */
+
+@media (max-width: 380px) {
+  .skb-page-inner {
+    padding: 20px 18px 16px;
+  }
+
+  .skb-tape {
+    width: 72px;
+    height: 22px;
+  }
+
+  .skb-note {
+    font-size: 19px;
+  }
+}
+
+/* ---------------- Reduced motion ---------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .skb-closed-book {
+    animation: none;
+  }
+
+  .skb-bookwrap,
+  .skb-book,
+  .skb-photo,
+  .skb-sticker,
+  .skb-dot,
+  .skb-corner::after {
+    transition: none;
+  }
+
+  .skb-book:hover,
+  .skb-book:hover .skb-photo {
+    transform: none;
+  }
+}
